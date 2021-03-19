@@ -28,7 +28,7 @@ Theres also page `'Important Test page for queues'` which allowes to play around
 
 Example of how to use the SDK is below. This is probably not good idea to run in production yet but gives a idea how to work with the Azure queues and how to poll messages.
 
-`
+```
 codeunit 50101 "Manage Queues"
 {
 
@@ -78,4 +78,4 @@ codeunit 50101 "Manage Queues"
         end;
     end;
 }
-`
+```
