@@ -28,8 +28,13 @@ table 50100 "AzureQueuesSetup"
     procedure TestConnection(): Boolean
     var
         AzureQueuesSDK: Codeunit AzureStorageQueuesSdk;
+        AzureStorageQueueSetup: Record AzureQueuesSetup;
         WarningConnectionNotEstablished: Label 'Please check endpoint and credentials. Unable to establish connection with Azure Queue Service';
     begin
+        if AzureStorageQueueSetup.Get() then begin
+            AzureStorageQueueSetup.TestField(AuthToken);
+            AzureStorageQueueSetup.TestField(EndPoint);
+        end;
         if not AzureQueuesSDK.TestConnection() then begin
             Message(WarningConnectionNotEstablished);
             exit(false);

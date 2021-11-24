@@ -128,7 +128,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
         AzureQueuesSetup: Record AzureQueuesSetup;
     begin
         if AzureQueuesSetup.Get() then begin
-            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + '?' + AzureQueuesSetup.AuthToken);
+            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + AzureQueuesSetup.AuthToken);
         end;
     end;
 
@@ -137,7 +137,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
         AzureQueuesSetup: Record AzureQueuesSetup;
     begin
         if AzureQueuesSetup.Get() then begin
-            exit(AzureQueuesSetup.EndPoint + '?' + AzureQueuesSetup.AuthToken);
+            exit(AzureQueuesSetup.EndPoint + AzureQueuesSetup.AuthToken);
         end;
     end;
 
@@ -146,7 +146,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
         AzureQueuesSetup: Record AzureQueuesSetup;
     begin
         if AzureQueuesSetup.Get() then begin
-            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + 'messages' + '/' + MessageID + '?' + AzureQueuesSetup.AuthToken + '&' + 'popreceipt=' + Popreceipt);
+            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + 'messages' + '/' + MessageID + AzureQueuesSetup.AuthToken + '&' + 'popreceipt=' + Popreceipt);
         end;
     end;
 
@@ -155,7 +155,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
         AzureQueuesSetup: Record AzureQueuesSetup;
     begin
         if AzureQueuesSetup.Get() then begin
-            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + 'messages' + '?' + AzureQueuesSetup.AuthToken);
+            exit(AzureQueuesSetup.EndPoint + '/' + Queue + '/' + 'messages' + AzureQueuesSetup.AuthToken);
         end;
     end;
 
