@@ -5,11 +5,11 @@
 Create Azure Storage Account and get your endpoint and [Shared access Signature token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)
 1. Create new queue:
 
-[New queue](/readme_assets/setup1.png)
+![New queue](/readme_assets/setup1.png)
 
 2. Create new Sas token:
 
-[New Sas token](/readme_assets/setup2.png)
+![New Sas token](/readme_assets/setup2.png)
 
 Fill out credentials in 'Setup Azure Store Queue Service'
 
