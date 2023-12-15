@@ -1,4 +1,4 @@
-page 50100 "SetupAzureQueue"
+page 84753 "SetupAzureQueue"
 {
     ApplicationArea = Basic, Suite;
     Caption = 'Setup Azure Store Queue Service';
@@ -24,6 +24,7 @@ page 50100 "SetupAzureQueue"
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Auth Token for the Azure Queue Service';
+                    ExtendedDatatype = Masked;
                 }
             }
         }

@@ -1,4 +1,4 @@
-page 50101 "ImportantTestPage"
+page 84752 "ImportantTestPage"
 {
     PageType = List;
     Caption = 'Important Test page for queues';

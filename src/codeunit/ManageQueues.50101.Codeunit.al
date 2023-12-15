@@ -1,4 +1,4 @@
-codeunit 50101 "Manage Queues"
+codeunit 84753 "Manage Queues"
 {
 
     procedure ProcessMessagesFromQueue(Queue: Text)

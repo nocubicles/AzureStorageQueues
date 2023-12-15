@@ -1,7 +1,7 @@
 {
   "id": "312ff51c-683f-4c82-ab59-0bba4fb577c9",
   "name": "azurequeues",
-  "publisher": "Default publisher",
+  "publisher": "integrated.ee",
   "version": "1.0.0.0",
   "brief": "",
   "description": "",
@@ -12,15 +12,14 @@
   "logo": "",
   "dependencies": [],
   "screenshots": [],
-  "platform": "17.0.0.0",
-  "application": "17.0.0.0",
+  "platform": "23.0.0.0",
+  "application": "23.0.0.0",
   "idRanges": [
     {
-      "from": 50100,
-      "to": 50149
+      "from": 84752,
+      "to": 84762
     }
   ],
   "contextSensitiveHelpUrl": "https://azurequeues.com/help/",
-  "showMyCode": true,
-  "runtime": "6.0"
+  "runtime": "12.0"
 }

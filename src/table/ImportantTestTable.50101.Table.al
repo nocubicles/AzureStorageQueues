@@ -1,4 +1,4 @@
-table 50101 "ImportantTestTable"
+table 84753 "ImportantTestTable"
 {
     DataClassification = CustomerContent;
 

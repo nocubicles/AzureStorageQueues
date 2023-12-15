@@ -1,4 +1,4 @@
-table 50100 "AzureQueuesSetup"
+table 84752 "AzureQueuesSetup"
 {
     Caption = 'Azure Queues Setup';
     fields

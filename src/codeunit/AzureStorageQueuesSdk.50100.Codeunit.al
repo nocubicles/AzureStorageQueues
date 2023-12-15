@@ -1,4 +1,4 @@
-codeunit 50100 "AzureStorageQueuesSdk"
+codeunit 84752 "AzureStorageQueuesSdk"
 {
     trigger OnRun()
     begin
@@ -57,7 +57,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
         end;
     end;
 
-    procedure GetNextMessageFromQueue(Queue: Text[20]): Text
+    procedure GetNextMessageFromQueue(Queue: Text): Text
     var
         HttpClient: HttpClient;
         HttpHeaders: HttpHeaders;
@@ -77,7 +77,7 @@ codeunit 50100 "AzureStorageQueuesSdk"
             Error(ResponseText);
     end;
 
-    procedure DeleteMessageFromQueue(Queue: Text[20]; MessageID: Text[100]; Popreceipt: Text[30]): Boolean
+    procedure DeleteMessageFromQueue(Queue: Text; MessageID: Text[100]; Popreceipt: Text[30]): Boolean
     var
         HttpClient: HttpClient;
         HttpHeaders: HttpHeaders;

@@ -2,18 +2,21 @@
   "version": "0.2.0",
   "configurations": [
       {
-          "name": "Microsoft cloud sandbox",
+          "name": "Your own server",
           "request": "launch",
           "type": "al",
-          "tenant": "CRMbc346886.onmicrosoft.com",
-          "environmentType": "Sandbox",
-          "environmentName": "Sandbox",
+          "environmentType": "OnPrem",
+          "server": "https://bclatest",
+          "serverInstance": "BC",
+          "authentication": "UserPassword",
           "startupObjectId": 22,
           "startupObjectType": "Page",
-          "breakOnError": true,
+          "breakOnError": "All",
           "launchBrowser": true,
           "enableLongRunningSqlStatements": true,
-          "enableSqlInformationDebugger": true
+          "enableSqlInformationDebugger": true,
+          "tenant": "default",
+          "usePublicURLFromServer": true
       }
   ]
 }
