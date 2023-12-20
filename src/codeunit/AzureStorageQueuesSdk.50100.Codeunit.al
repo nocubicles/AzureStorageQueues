@@ -17,6 +17,10 @@ codeunit 84752 "AzureStorageQueuesSdk"
         if EnsureQueueExists(Queue) then begin
             HttpContent.WriteFrom('<QueueMessage><MessageText>' + MessageBody + '</MessageText></QueueMessage>');
             HttpClient.Post(ConstructRequestUriForMessages(Queue), HttpContent, HttpResponse);
+            if not (HttpResponse.IsSuccessStatusCode) then begin
+                HttpResponse.Content().ReadAs(ResponseText);
+                Error(ResponseText);
+            end;
             exit(HttpResponse.IsSuccessStatusCode);
         end;
     end;
@@ -118,8 +122,13 @@ codeunit 84752 "AzureStorageQueuesSdk"
         HttpClient: HttpClient;
         HttpResponseMessage: HttpResponseMessage;
         HttpContent: HttpContent;
+        ResponseText: Text;
     begin
         HttpClient.Put(ConstructRequestUriForQueue(Queue), HttpContent, HttpResponseMessage);
+        if not (HttpResponseMessage.IsSuccessStatusCode) then begin
+            HttpResponseMessage.Content().ReadAs(ResponseText);
+            Error(ResponseText);
+        end;
         exit(HttpResponseMessage.IsSuccessStatusCode);
     end;
 
