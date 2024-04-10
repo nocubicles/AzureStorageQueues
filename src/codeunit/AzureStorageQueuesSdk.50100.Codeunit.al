@@ -146,7 +146,7 @@ codeunit 84752 "AzureStorageQueuesSdk"
         AzureQueuesSetup: Record AzureQueuesSetup;
     begin
         if AzureQueuesSetup.Get() then begin
-            exit(AzureQueuesSetup.EndPoint + AzureQueuesSetup.AuthToken);
+            exit(AzureQueuesSetup.EndPoint + '?' + AzureQueuesSetup.AuthToken);
         end;
     end;
 
