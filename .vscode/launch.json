@@ -7,7 +7,7 @@
           "type": "al",
           "environmentType": "Sandbox",
           "environmentName": "sandbox",
-          "tenant":"default",
+          "tenant":"7e6efb3b-5060-4666-aee5-ffe6f3cb3644",
           "startupObjectId": 89,
           "startupObjectType": "Page",
           "breakOnError": "All",
