@@ -7,13 +7,13 @@ codeunit 84752 "AzureStorageQueuesSdk"
 
     procedure PostMessageToQueue(Queue: Text; MessageBody: Text): Boolean
     var
-        HttpClient: HttpClient;
         HttpHeaders: HttpHeaders;
         HttpContent: HttpContent;
         HttpRequest: HttpRequestMessage;
         HttpResponse: HttpResponseMessage;
         ResponseText: Text;
     begin
+        SetupHttpClient();
         if EnsureQueueExists(Queue) then begin
             HttpContent.WriteFrom('<QueueMessage><MessageText>' + MessageBody + '</MessageText></QueueMessage>');
             HttpClient.Post(ConstructRequestUriForMessages(Queue), HttpContent, HttpResponse);
@@ -63,13 +63,13 @@ codeunit 84752 "AzureStorageQueuesSdk"
 
     procedure GetNextMessageFromQueue(Queue: Text): Text
     var
-        HttpClient: HttpClient;
         HttpHeaders: HttpHeaders;
         HttpContent: HttpContent;
         HttpRequest: HttpRequestMessage;
         HttpResponse: HttpResponseMessage;
         ResponseText: Text;
     begin
+        SetupHttpClient();
         if EnsureQueueExists(Queue) then begin
             HttpClient.Get(ConstructRequestUriForMessages(Queue), HttpResponse);
         end;
@@ -83,13 +83,13 @@ codeunit 84752 "AzureStorageQueuesSdk"
 
     procedure DeleteMessageFromQueue(Queue: Text; MessageID: Text[100]; Popreceipt: Text[30]): Boolean
     var
-        HttpClient: HttpClient;
         HttpHeaders: HttpHeaders;
         HttpContent: HttpContent;
         HttpRequest: HttpRequestMessage;
         HttpResponse: HttpResponseMessage;
         ResponseText: Text;
     begin
+        SetupHttpClient();
         HttpClient.Delete(ConstructRequestUriForMessage(Queue, MessageID, Popreceipt), HttpResponse);
         exit(HttpResponse.IsSuccessStatusCode);
     end;
@@ -97,19 +97,19 @@ codeunit 84752 "AzureStorageQueuesSdk"
 
     procedure TestConnection(): Boolean
     var
-        HttpClient: HttpClient;
         HttpResponseMessage: HttpResponseMessage;
     begin
+        SetupHttpClient();
         HttpClient.Get(ConstructRequestUriForAccount() + '&restype=service&comp=properties', HttpResponseMessage);
         exit(HttpResponseMessage.IsSuccessStatusCode);
     end;
 
     procedure ListQueues(): Text
     var
-        HttpClient: HttpClient;
         HttpResponseMessage: HttpResponseMessage;
         ResponseText: Text;
     begin
+        SetupHttpClient();
         HttpClient.Get(ConstructRequestUriForAccount() + '&comp=list', HttpResponseMessage);
         if HttpResponseMessage.IsSuccessStatusCode then begin
             if HttpResponseMessage.Content.ReadAs(ResponseText) then
@@ -119,11 +119,11 @@ codeunit 84752 "AzureStorageQueuesSdk"
 
     procedure EnsureQueueExists(Queue: Text): Boolean
     var
-        HttpClient: HttpClient;
         HttpResponseMessage: HttpResponseMessage;
         HttpContent: HttpContent;
         ResponseText: Text;
     begin
+        SetupHttpClient();
         HttpClient.Put(ConstructRequestUriForQueue(Queue), HttpContent, HttpResponseMessage);
         if not (HttpResponseMessage.IsSuccessStatusCode) then begin
             HttpResponseMessage.Content().ReadAs(ResponseText);
@@ -168,55 +168,14 @@ codeunit 84752 "AzureStorageQueuesSdk"
         end;
     end;
 
-    //DoRequestWithComplexAuth is not working yet
-    procedure DoRequestWithComplexAuth(Queue: Text)
-    var
-        HttpClient: HttpClient;
-        HttpHeaders: HttpHeaders;
-        HttpContent: HttpContent;
-        HttpRequest: HttpRequestMessage;
-        HttpResponse: HttpResponseMessage;
-        ResponseText: Text;
-        AuthString: Text;
-        AuthSchemeName: Text;
-        Signature: Text;
-        StringToSign: Text;
-        RequestVerb: Text;
-        EncryptionManagement: Codeunit "Cryptography Management";
-        HashAlgorithmType: Option SHA256;
-        AzureQueuesSetup: Record AzureQueuesSetup;
+    local procedure SetupHttpClient()
     begin
-        AzureQueuesSetup.Get();
-        AzureQueuesSetup.FieldError(EndPoint, ErrEndPointMissing);
-        AzureQueuesSetup.FieldError(AuthToken, ErrAuthTokenMisisng);
-        HttpHeaders.Add('x-ms-date', format(CurrentDateTime()));
-        AuthSchemeName := 'SharedKeyLite';
-        RequestVerb := 'PUT';
-
-        StringToSign := RequestVerb + '\n' +
-                        '\n' +
-                        'text/plain;' + '\n' +
-                        'x-ms-date:' + format(CurrentDateTime()) + '\n' +
-                        'x-ms-meta-m1:v1' + '\n' +
-                        'x-ms-meta-m2:v2' + '\n' +
-                        Queue;
-        Signature := EncryptionManagement.GenerateHashAsBase64String(StringToSign, HashAlgorithmType::SHA256);
-
-        HttpHeaders.Add('Authorization', Format(AuthSchemeName + ' ' + Queue + ':' + Signature));
-
-        HttpContent.GetHeaders(HttpHeaders);
-        HttpRequest.Content := HttpContent;
-        HttpRequest.SetRequestUri(AzureQueuesSetup.EndPoint);
-        HttpRequest.Method := 'PUT';
-
-        HttpClient.Send(HttpRequest, HttpResponse);
-
-        HttpResponse.Content().ReadAs(ResponseText);
-
-        Message(ResponseText);
+        HttpClient.Clear();
+        HttpClient.DefaultRequestHeaders.Add('x-ms-blob-type', 'blockblob');
     end;
 
     var
         ErrEndPointMissing: Label 'Please setup Azure Queues endpoint';
         ErrAuthTokenMisisng: Label 'Please setup Azure Queues auth token';
+        HttpClient: HttpClient;
 }

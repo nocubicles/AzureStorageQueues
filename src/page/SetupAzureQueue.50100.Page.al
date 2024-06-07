@@ -15,7 +15,7 @@ page 84753 "SetupAzureQueue"
             group(GroupName)
             {
                 Caption = 'Setup';
-                field(EndPoint; Rec.EndPoint)
+                field(EndPoint; Rec.ConnectionSting)
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'End point for the Azure Queue Service';
